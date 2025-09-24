@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hanif Ridho Abdillah - Indonesian Geological Research</title>
+    <title>Hanif Ridho Abdillah - Indonesian Geophysical Research</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23007ac2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='2' y1='12' x2='22' y2='12'%3E%3C/line%3E%3Cpath d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'%3E%3C/path%3E%3C/svg%3E">
     
     <!-- LeafletJS CSS -->
@@ -94,8 +94,51 @@
 <body class="text-gray-700">
     <!-- Header -->
     <header class="bg-[#007ac2] shadow-md z-20 flex-shrink-0">
-        <div class="max-w-full mx-auto py-3 px-4 sm:px-6 lg:px-8 flex justify-between items-center overflow-hidden">
-            <h1 class="text-lg sm:text-xl font-bold text-white whitespace-nowrap text-ellipsis">Indonesian Geological Research Explorer</h1>
+        <div class="max-w-full mx-auto py-3 px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between">
+                <a href="#" onclick="location.reload(); return false;" class="text-white no-underline flex-shrink-0">
+                    <h1 class="text-lg sm:text-xl font-bold whitespace-nowrap text-ellipsis">Indonesian Geophysical Research Explorer</h1>
+                </a>
+
+                <!-- Desktop Filters & Search -->
+                <div class="hidden md:flex items-center gap-2 flex-grow justify-end">
+                    <select id="method-filter" class="p-2 border rounded-md bg-white text-sm text-gray-700 focus:ring-2 focus:ring-blue-300 focus:outline-none transition-all duration-200 w-32"><option value="">Method</option></select>
+                    <select id="year-filter" class="p-2 border rounded-md bg-white text-sm text-gray-700 focus:ring-2 focus:ring-blue-300 focus:outline-none transition-all duration-200 w-24"><option value="">Year</option></select>
+                    <select id="location-filter" class="p-2 border rounded-md bg-white text-sm text-gray-700 focus:ring-2 focus:ring-blue-300 focus:outline-none transition-all duration-200 w-32"><option value="">Location</option></select>
+                    <button id="clear-filters" class="p-2 bg-white text-gray-700 rounded-md hover:bg-gray-200 text-sm transition-colors duration-200">Clear</button>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                        </div>
+                        <input type="text" id="keyword-search" placeholder="Search..." class="p-2 pl-10 border rounded-md bg-white text-sm text-gray-700 focus:ring-2 focus:ring-blue-300 focus:outline-none transition-all duration-200 w-48">
+                    </div>
+                </div>
+
+                <!-- Mobile Hamburger Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="p-2 rounded-md text-white hover:bg-blue-800 focus:outline-none">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden pt-4">
+                <div class="flex flex-col gap-3">
+                    <div class="relative">
+                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                         </div>
+                         <input type="text" id="keyword-search-mobile" placeholder="Search..." class="w-full p-2 pl-10 border rounded-md bg-white text-sm text-gray-700 focus:ring-2 focus:ring-blue-300 focus:outline-none transition-all duration-200">
+                    </div>
+                    <select id="method-filter-mobile" class="w-full p-2 border rounded-md bg-white text-sm text-gray-700 focus:ring-2 focus:ring-blue-300 focus:outline-none transition-all duration-200"><option value="">Method</option></select>
+                    <select id="year-filter-mobile" class="w-full p-2 border rounded-md bg-white text-sm text-gray-700 focus:ring-2 focus:ring-blue-300 focus:outline-none transition-all duration-200"><option value="">Year</option></select>
+                    <select id="location-filter-mobile" class="w-full p-2 border rounded-md bg-white text-sm text-gray-700 focus:ring-2 focus:ring-blue-300 focus:outline-none transition-all duration-200"><option value="">Location</option></select>
+                    <button id="clear-filters-mobile" class="w-full bg-white text-gray-700 p-2 rounded-md hover:bg-gray-200 text-sm transition-colors duration-200">Clear</button>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -121,19 +164,6 @@
         <div id="resizer-v" class="resizer-v"></div>
 
         <div id="table-container-wrapper" class="border-t-2 border-gray-200">
-             <!-- Filter Controls -->
-             <div class="bg-gray-50 border-b p-4">
-                <button id="filter-toggle" class="w-full bg-gray-200 text-gray-700 p-2 rounded-md hover:bg-gray-300 md:hidden flex justify-between items-center">
-                    <span>Show Filters</span>
-                    <svg id="filter-arrow" class="w-4 h-4 transform transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-                </button>
-                <div id="filter-controls" class="hidden md:grid grid-cols-1 md:grid-cols-5 gap-4 pt-4 md:pt-0">
-                    <select id="author-filter" class="w-full p-2 border rounded-md"><option value="">Filter by Author...</option></select>
-                    <select id="method-filter" class="w-full p-2 border rounded-md"><option value="">Filter by Method...</option></select>
-                    <input type="text" id="keyword-search" placeholder="Search in summary..." class="w-full p-2 border rounded-md md:col-span-2">
-                    <button id="clear-filters" class="w-full bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600">Clear</button>
-                </div>
-            </div>
             <div id="table-container" class="flex-grow overflow-auto p-4">
                 <table id="data-table" class="display" style="width:100%">
                     <thead><tr><th>ID</th><th>Title</th><th>Author</th><th>Method</th></tr></thead>
@@ -151,7 +181,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             let allData = [], allMarkers = {}, dataTable;
-            let allUniqueAuthors = [], allUniqueMethods = [];
+            let allUniqueMethods = [], allUniqueYears = [], allUniqueLocations = [];
             const infoPanel = document.getElementById('info-panel');
             
             const map = L.map('map', { center: [-2.5489, 118.0149], zoom: 5 });
@@ -184,22 +214,40 @@
                 });
             }
 
-            function populateFilterDropdowns(authors, methods) {
-                const authorFilter = $('#author-filter');
-                const currentAuthor = authorFilter.val();
-                authorFilter.empty().append('<option value="">Filter by Author...</option>');
-                authors.forEach(author => authorFilter.append(`<option value="${author}">${author}</option>`));
-                if (authors.includes(currentAuthor)) {
-                    authorFilter.val(currentAuthor);
-                }
+            function populateFilters() {
+                allUniqueMethods = [...new Set(allData.map(item => item.Metode).filter(Boolean))].sort();
+                allUniqueYears = [...new Set(allData.map(item => item.year).filter(Boolean))].sort((a, b) => b - a);
+                allUniqueLocations = [...new Set(allData.map(item => item.location).filter(Boolean))].sort();
 
                 const methodFilter = $('#method-filter');
-                const currentMethod = methodFilter.val();
-                methodFilter.empty().append('<option value="">Filter by Method...</option>');
-                methods.forEach(method => methodFilter.append(`<option value="${method}">${method}</option>`));
-                if (methods.includes(currentMethod)) {
-                    methodFilter.val(currentMethod);
-                }
+                const methodFilterMobile = $('#method-filter-mobile');
+                methodFilter.empty().append('<option value="">Method</option>');
+                methodFilterMobile.empty().append('<option value="">Method</option>');
+                allUniqueMethods.forEach(method => {
+                    const option = `<option value="${method}">${method}</option>`;
+                    methodFilter.append(option);
+                    methodFilterMobile.append(option);
+                });
+
+                const yearFilter = $('#year-filter');
+                const yearFilterMobile = $('#year-filter-mobile');
+                yearFilter.empty().append('<option value="">Year</option>');
+                yearFilterMobile.empty().append('<option value="">Year</option>');
+                allUniqueYears.forEach(year => {
+                    const option = `<option value="${year}">${year}</option>`;
+                    yearFilter.append(option);
+                    yearFilterMobile.append(option);
+                });
+                
+                const locationFilter = $('#location-filter');
+                const locationFilterMobile = $('#location-filter-mobile');
+                locationFilter.empty().append('<option value="">Location</option>');
+                locationFilterMobile.empty().append('<option value="">Location</option>');
+                allUniqueLocations.forEach(loc => {
+                    const option = `<option value="${loc}">${loc}</option>`;
+                    locationFilter.append(option);
+                    locationFilterMobile.append(option);
+                });
             }
 
             function updateInfoPanel(data) {
@@ -233,45 +281,52 @@
                 });
 
                 $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
-                    const authorFilter = $('#author-filter').val();
                     const methodFilter = $('#method-filter').val();
+                    const yearFilter = $('#year-filter').val();
+                    const locationFilter = $('#location-filter').val();
                     const keywordSearch = $('#keyword-search').val().toLowerCase();
+                    
                     const rowData = allData[dataIndex];
-                    const authorMatch = !authorFilter || rowData.Penulis === authorFilter;
+                    
                     const methodMatch = !methodFilter || rowData.Metode === methodFilter;
-                    const keywordMatch = !keywordSearch || (rowData.Ringkasan && rowData.Ringkasan.toLowerCase().includes(keywordSearch));
-                    return authorMatch && methodMatch && keywordMatch;
+                    const yearMatch = !yearFilter || rowData.year === yearFilter;
+                    const locationMatch = !locationFilter || rowData.location === locationFilter;
+                    
+                    const textForSearch = (rowData.Judul + ' ' + rowData.Ringkasan).toLowerCase();
+                    const keywordMatch = !keywordSearch || textForSearch.includes(keywordSearch);
+                    
+                    return methodMatch && yearMatch && locationMatch && keywordMatch;
                 });
 
-                function updateAndApplyFilters() {
-                    const selectedAuthor = $('#author-filter').val();
-                    const selectedMethod = $('#method-filter').val();
+                // Sync desktop and mobile filter controls
+                function setupFilterSync() {
+                    const controls = ['method-filter', 'year-filter', 'location-filter', 'keyword-search'];
+                    
+                    controls.forEach(id => {
+                        const desktop = $(`#${id}`);
+                        const mobile = $(`#${id}-mobile`);
+                        const eventType = (id === 'keyword-search') ? 'keyup' : 'change';
 
-                    let authorFilteredData = allData;
-                    if(selectedMethod) {
-                        authorFilteredData = allData.filter(row => row.Metode === selectedMethod);
-                    }
-                    const relevantAuthors = [...new Set(authorFilteredData.map(row => row.Penulis).filter(Boolean))].sort();
+                        desktop.on(eventType, function() {
+                            mobile.val(desktop.val());
+                            dataTable.draw();
+                        });
 
-                    let methodFilteredData = allData;
-                    if(selectedAuthor) {
-                        methodFilteredData = allData.filter(row => row.Penulis === selectedAuthor);
-                    }
-                    const relevantMethods = [...new Set(methodFilteredData.map(row => row.Metode).filter(Boolean))].sort();
+                        mobile.on(eventType, function() {
+                            desktop.val(mobile.val());
+                            dataTable.draw();
+                        });
+                    });
 
-                    populateFilterDropdowns(relevantAuthors, relevantMethods);
-                    dataTable.draw();
+                    $('#clear-filters, #clear-filters-mobile').on('click', () => {
+                         controls.forEach(id => {
+                            $(`#${id}`).val('');
+                            $(`#${id}-mobile`).val('');
+                        });
+                        dataTable.draw();
+                    });
                 }
-
-                $('#author-filter, #method-filter').on('change', updateAndApplyFilters);
-                $('#keyword-search').on('keyup', () => dataTable.draw());
-
-
-                $('#clear-filters').on('click', () => {
-                    $('#author-filter, #method-filter, #keyword-search').val('');
-                    populateFilterDropdowns(allUniqueAuthors, allUniqueMethods);
-                    dataTable.draw();
-                });
+                setupFilterSync();
             }
 
             // --- MAIN DATA FETCH & APPLICATION START ---
@@ -281,13 +336,19 @@
                     allData = parseCSV(csvText);
                     const allPoints = [];
                     const tableData = [];
-                    
-                    allUniqueAuthors = [...new Set(allData.map(item => item.Penulis).filter(Boolean))].sort();
-                    allUniqueMethods = [...new Set(allData.map(item => item.Metode).filter(Boolean))].sort();
-                    populateFilterDropdowns(allUniqueAuthors, allUniqueMethods);
 
                     allData.forEach((row, index) => {
                         row.id = index;
+                        const yearMatch = row.Judul.match(/\((\d{4})\)/);
+                        row.year = yearMatch ? yearMatch[1] : null;
+                        const textForLocation = (row.Judul + ' ' + row.Ringkasan).toLowerCase();
+                        if (textForLocation.includes('bandar lampung')) row.location = 'Bandar Lampung';
+                        else if (textForLocation.includes('pesawaran')) row.location = 'Pesawaran';
+                        else if (textForLocation.includes('jati agung') || textForLocation.includes('jatimulyo')) row.location = 'Jati Agung';
+                        else if (textForLocation.includes('way umpu')) row.location = 'Way Umpu';
+                        else if (textForLocation.includes('itera')) row.location = 'ITERA';
+                        else row.location = null;
+
                         const coordsString = row['Koordinat (Lat,Lon)'];
                         if (coordsString) {
                             const [lat, lon] = coordsString.split(',').map(Number);
@@ -302,13 +363,10 @@
                         }
                     });
 
-                    // Add all markers to the map initially
+                    populateFilters();
                     Object.values(allMarkers).forEach(marker => imageMarkersLayer.addLayer(marker));
-
                     if (allPoints.length > 0) map.fitBounds(L.latLngBounds(allPoints), { padding: [50, 50] });
                     initializeDataTable(tableData);
-                    
-                    // Trigger initial draw to show all data
                     dataTable.draw();
 
                     $('#data-table').on('draw.dt', function () {
@@ -321,12 +379,11 @@
                             if (row && row.lat && row.lon) filteredPoints.push([row.lat, row.lon]);
                         });
                         
-                        const noFiltersApplied = !$('#author-filter').val() && !$('#method-filter').val() && !$('#keyword-search').val();
+                        const noFiltersApplied = !$('#method-filter').val() && !$('#year-filter').val() && !$('#location-filter').val() && !$('#keyword-search').val();
                         
                         if (filteredPoints.length > 0) {
                              map.fitBounds(L.latLngBounds(filteredPoints), { padding: [50, 50], maxZoom: 15 });
                         } else if (noFiltersApplied && allPoints.length > 0) {
-                             // If filters are cleared but table is empty (e.g. page 2), zoom to all points
                              map.fitBounds(L.latLngBounds(allPoints), { padding: [50, 50] });
                         }
                     });
@@ -340,22 +397,14 @@
                     });
                 });
 
-            // --- NEW: COLLAPSIBLE FILTERS & RESIZABLE PANELS ---
-
-            // 1. Collapsible Filters for Mobile
-            const filterToggle = document.getElementById('filter-toggle');
-            const filterControls = document.getElementById('filter-controls');
-            const filterArrow = document.getElementById('filter-arrow');
-            const filterToggleText = filterToggle.querySelector('span');
-
-            filterToggle.addEventListener('click', () => {
-                const isHidden = filterControls.classList.contains('hidden');
-                filterControls.classList.toggle('hidden');
-                filterArrow.classList.toggle('rotate-180');
-                filterToggleText.textContent = isHidden ? 'Hide Filters' : 'Show Filters';
+            // --- Mobile Menu Toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
             });
-            
-            // 2. Resizable Panels
+
+            // --- Resizable Panels ---
             const topRow = document.getElementById('top-row');
             const tableWrapper = document.getElementById('table-container-wrapper');
             const mapContainer = document.getElementById('map-container');
@@ -363,7 +412,6 @@
             const resizerV = document.getElementById('resizer-v');
             const resizerH = document.getElementById('resizer-h');
             
-            // Set initial heights
             topRow.style.height = '60vh';
             tableWrapper.style.height = 'calc(40vh - 56px - 8px)'; // 40vh - header - resizer
 
@@ -379,13 +427,12 @@
                 const mainContainerHeight = document.getElementById('main-container').offsetHeight;
                 let newTopHeight = e.clientY - topRow.getBoundingClientRect().top;
                 
-                // Constraints
-                if (newTopHeight < 100) newTopHeight = 100; // Min top height
-                if (newTopHeight > mainContainerHeight - 150) newTopHeight = mainContainerHeight - 150; // Min bottom height
+                if (newTopHeight < 100) newTopHeight = 100;
+                if (newTopHeight > mainContainerHeight - 150) newTopHeight = mainContainerHeight - 150;
 
                 topRow.style.height = `${newTopHeight}px`;
                 tableWrapper.style.height = `calc(${mainContainerHeight - newTopHeight - resizerV.offsetHeight}px)`;
-                map.invalidateSize(); // Important for Leaflet
+                map.invalidateSize();
             }
 
             function stopResizeV() {
@@ -406,13 +453,12 @@
                 const topRowWidth = topRow.offsetWidth;
                 let newMapWidth = e.clientX - topRow.getBoundingClientRect().left;
 
-                // Constraints
-                if (newMapWidth < 200) newMapWidth = 200; // Min map width
-                if (newMapWidth > topRowWidth - 200) newMapWidth = topRowWidth - 200; // Min info panel width
+                if (newMapWidth < 200) newMapWidth = 200;
+                if (newMapWidth > topRowWidth - 200) newMapWidth = topRowWidth - 200;
 
                 mapContainer.style.width = `${newMapWidth}px`;
                 infoPanelContainer.style.width = `calc(${topRowWidth - newMapWidth - resizerH.offsetWidth}px)`;
-                map.invalidateSize(); // Important for Leaflet
+                map.invalidateSize();
             }
             
             function stopResizeH() {
